@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <html>
 <head>
@@ -119,11 +119,12 @@
 		
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>						
+				</td>					
 					<c:choose>
-						<c:when test="${param.menu=='search'}">					
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-							<a href="/purchase/addPurchaseView.do?prodNo=${pvo.prodNo}">구매</a>
+						<c:when test="${param.menu == 'search' }">					
+					
+						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+							<a href="/purchase/addPurchaseView">구매</a>
 						</td>
 						<td width="14" height="23">
 							<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -136,16 +137,19 @@
 							<a href="javascript:history.go(-1)">이전</a>
 						</td>
 						</c:when>
-					<c:when test="${param.menu=='manage' || param.menu=='confirm' || user.role=='admin'}">					
-						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">				
-							<a href="/product/listProduct.do?menu=manage">확인</a>						
-						</td>
-					</c:when>
-					<c:otherwise>
-						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">				
-							<a href="/product/listProduct.do?menu=search">확인</a>
-					</c:otherwise>
-				</c:choose>
+						
+						<c:when test="${param.menu == 'confirm' }">
+							<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+								<a href="/product/listProduct?menu=manage">확인</a>
+						</c:when>
+						
+						<c:otherwise>
+							<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+								<a href="/product/listProduct?menu=search">확인</a>
+						</c:otherwise>											
+						
+					</c:choose>											
+					
 				
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
