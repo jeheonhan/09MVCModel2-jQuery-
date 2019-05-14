@@ -2,13 +2,16 @@ package com.model2.mvc.web.product;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,13 +51,25 @@ public class ProductController {
 	
 	@RequestMapping( value="getProduct", method=RequestMethod.GET)
 	public String getProduct(@RequestParam("prodNo") int prodNo,
-							@RequestParam("menu") String menu,Model model) throws Exception {
+							@RequestParam("menu") String menu,Model model,							
+							@CookieValue(value="history", required=false) String history,
+							HttpServletResponse response) throws Exception {
 		
 		System.out.println("==================== /getProduct 시작  ================");
 		
-		Product product = productService.getProduct(prodNo);
-		
-		model.addAttribute("pvo", product);
+		if(history != null) {
+			if(!history.contains(""+prodNo)){	//쿠키 중복값 넣지 않게
+			history += ","+prodNo;
+			}
+		}else {
+			history = ","+prodNo;
+		}		
+		Cookie cookie = new Cookie("history", history);
+		cookie.setPath("/");								//모든경로에서 쿠키접근 허용
+		response.addCookie(cookie);		
+				
+		Product product = productService.getProduct(prodNo);		
+		model.addAttribute("pvo", product);				
 		
 		if(menu.equals("manage")) {			
 			return "forward:/product/updateProduct.jsp";			

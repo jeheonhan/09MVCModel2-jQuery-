@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 
-function fncGetProductList(currentPage) {
+function fncGetList(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
    	document.detailForm.submit();		
 }
@@ -23,7 +23,7 @@ function fncGetProductList(currentPage) {
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post">
+<form name="detailForm" action="/product/listProduct.do?menu=${param.menu}" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -63,7 +63,7 @@ function fncGetProductList(currentPage) {
 			<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px"
 					value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
 					class="ct_input_g" style="width:200px; height:20px" 
-					onkeypress="if(event.keyCode==13) {javascript:fncGetProductList('1');}" >
+					onkeypress="if(event.keyCode==13) {javascript:fncGetList('1');}">
 		</td>
 		
 		
@@ -74,7 +74,7 @@ function fncGetProductList(currentPage) {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetProductList('1');">검색</a>
+						<a href="javascript:fncGetList('1');">검색</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -113,31 +113,31 @@ function fncGetProductList(currentPage) {
 				<td align="center">${i}</td>
 				<td></td>				
 				<td align="center">
-					<a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
+					<a href="/product/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 				</td>		
 				<td></td>
 				<td align="center">${product.price}</td>
 				<td></td>
-				<td align="center">${product.regDate}</td>
+				<td align="center">${product.manuDate}</td>
 				<td></td>
 				<td align="center">
 				
 			<c:choose>
 				<c:when test="${product.proTranCode == '000'}">
-							<strong>판매중</strong>
+							<span style="color:green"><strong>판매중</strong></span>
 				</c:when>
 				<c:when test="${product.proTranCode == '111'}">				
-							<strong>구매완료</strong>
+							<span style="color:orange"><strong>구매완료</strong></span>
 				</c:when>
 				<c:when test="${product.proTranCode == '222'}">				
 							<strong>배송중</strong>
 				</c:when>
 				<c:otherwise>				
-							<strong>재고없음</strong>
+							<span style="color:red"><strong>재고없음</strong></span>
 				</c:otherwise>				
 			</c:choose>
 				<c:if test="${param.menu eq'manage' and product.proTranCode eq '111'}">
-				--><a href="/purchase/updateTranCode?prodNo=${product.prodNo}&currentPage=${resultPage.currentPage}&menu=${param.menu}">배송하기</a>
+				--><a href="/purchase/updateTranCode.do?prodNo=${product.prodNo}&currentPage=${resultPage.currentPage}&menu=${param.menu}">배송하기</a>
 				</c:if>	
 				
 				</td>	
@@ -151,6 +151,7 @@ function fncGetProductList(currentPage) {
 			
 				<tr>
 					<td align="center">
+						<input type="hidden" id="currentPage" name="currentPage" value=""/>
 						<jsp:include page="../common/pageNavigator.jsp"/>				
 					</td>
 				</tr>
