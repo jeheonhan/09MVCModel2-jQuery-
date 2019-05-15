@@ -44,6 +44,10 @@ public class ProductController {
 		
 		System.out.println("/addProduct");
 		
+		String manuDate = product.getManuDate();
+		manuDate = manuDate.replaceAll("/", "");
+		product.setManuDate(manuDate);
+		
 		productService.addProduct(product);
 		
 		return "forward:/product/addProduct.jsp";
@@ -86,7 +90,7 @@ public class ProductController {
 		
 		System.out.println("/updateProduct");	
 		
-		manuDate = manuDate.replaceAll("-", "");
+		manuDate = manuDate.replaceAll("/", "");
 		product.setManuDate(manuDate);
 		
 		productService.updateProduct(product);

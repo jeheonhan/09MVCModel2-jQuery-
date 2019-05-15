@@ -6,49 +6,76 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
+						<!-- 달력CSS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+
+						<!-- jQuery Lib import(CDN) -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+						<!-- 달력UI CDN -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
-function fncAddProduct(){
-	//Form 유효성 검증
- 	var name = document.detailForm.prodName.value;
-	var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value;
-
-	if(name == null || name.length<1){
-		alert("상품명은 반드시 입력하여야 합니다.");
-		return;
+	function fncAddProduct(){
+		//Form 유효성 검증
+	 	var name = $("input:text[name='prodName']").val();
+		var detail = $("input:text[name='prodDetail']").val();
+		var manuDate = $("input:text[name='manuDate']").val();
+		var price = $("input:text[name='price']").val();
+	
+		if(name == null || name.length<1){
+			alert("상품명은 반드시 입력하여야 합니다.");
+			return;
+		}
+		if(detail == null || detail.length<1){
+			alert("상품상세정보는 반드시 입력하여야 합니다.");
+			return;
+		}
+		if(manuDate == null || manuDate.length<1){
+			alert("제조일자는 반드시 입력하셔야 합니다.");
+			return;
+		}
+		if(price == null || price.length<1){
+			alert("가격은 반드시 입력하셔야 합니다.");
+			return;
+		}
+	
+		//document.detailForm.action='/product/addProduct';
+		//document.detailForm.submit();
+		
+		$("form").attr("method", "POST").attr("action", "/product/addProduct").submit();
 	}
-	if(detail == null || detail.length<1){
-		alert("상품상세정보는 반드시 입력하여야 합니다.");
-		return;
+	
+	function resetData(){
+		//document.detailForm.reset();
+		$("form").reset();
 	}
-	if(manuDate == null || manuDate.length<1){
-		alert("제조일자는 반드시 입력하셔야 합니다.");
-		return;
-	}
-	if(price == null || price.length<1){
-		alert("가격은 반드시 입력하셔야 합니다.");
-		return;
-	}
-
-	document.detailForm.action='/product/addProduct';
-	document.detailForm.submit();
-}
-
-function resetData(){
-	document.detailForm.reset();
-}
+	
+	$(function(){
+		
+		$(".ct_btn01:contains('등록')").on("click", function(){			
+			fncAddProduct();
+		});
+		
+		$(".ct_btn01:contains('취소')").on("click", function(){			
+			resetData();
+		});
+		
+		$("#calendar").datepicker({dateFormat:'yy/mm/dd'});
+		/*
+										datepicher(); 괄호안에 날짜형식 지정가능
+										{dateFormat:'yymmdd'} JSON형식
+		*/
+	});
 
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -111,10 +138,10 @@ function resetData(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="manuDate" readonly="readonly" class="ct_input_g"  
-						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" 
-										onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>
+			<input type="text" id="calendar" name="manuDate" readonly="readonly" class="ct_input_g"  
+						style="width: 100px; height: 19px"	maxLength="10" minLength="6"
+						placeholder="달력보기(클릭)"/>
+				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" />
 		</td>
 	</tr>
 	<tr>
@@ -156,7 +183,8 @@ function resetData(){
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"  style="padding-top: 3px;">
-					<a href="javascript:fncAddProduct();">등록</a>
+					<%--<a href="javascript:fncAddProduct();">등록</a>--%>
+					등록
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -166,7 +194,8 @@ function resetData(){
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	 style="padding-top: 3px;">
-					<a href="javascript:resetData();">취소</a>
+					<%--<a href="javascript:resetData();">취소</a>--%>
+					취소
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

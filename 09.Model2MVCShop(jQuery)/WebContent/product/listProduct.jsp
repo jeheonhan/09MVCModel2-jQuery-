@@ -9,12 +9,51 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript">
+<!-- jQuery Lib import(CDN) -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">	
 
-function fncGetList(currentPage) {
+	function fncGetList(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
    	document.detailForm.submit();		
-}
+	}
+	function fncGetList(currentPage) {
+		document.getElementById("currentPage").value = currentPage;
+	   	document.detailForm.submit();	   	
+	}
+	
+	$(function(){
+		
+		$("input:text[name='searchKeyword']").on("keydown", function(event){
+			
+			if(event.keyCode==13){
+				fncGetList('1');
+			}
+			
+		});
+		
+		$(".ct_btn01:contains('검색')").on("click", function(){
+			fncGetList('1');			
+		});
+		
+		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+		$("h7").css("color" , "red");
+		
+		$(".ct_list_pop td:nth-child(3)").on("click", function(){
+			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+		});
+		
+		$(".ct_list_pop td:nth-child(11):contains('배송하기')").on("click", function(){
+			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+		});
+		
+		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+		console.log ( $(".ct_list_pop:nth-child(4)" ).html() ); //==> ok
+		
+		
+		
+	});
 
 </script>
 </head>
@@ -64,6 +103,7 @@ function fncGetList(currentPage) {
 					value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
 					class="ct_input_g" style="width:200px; height:20px" 
 					onkeypress="if(event.keyCode==13) {javascript:fncGetList('1');}">
+					class="ct_input_g" style="width:200px; height:20px">
 		</td>
 		
 		
@@ -75,6 +115,7 @@ function fncGetList(currentPage) {
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<a href="javascript:fncGetList('1');">검색</a>
+											검색
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -99,6 +140,8 @@ function fncGetList(currentPage) {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
+		<td class="ct_list_b">제조일</td>	
+		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
 	</tr>
 	<tr>
@@ -114,9 +157,13 @@ function fncGetList(currentPage) {
 				<td></td>				
 				<td align="center">
 					<a href="/product/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
+					${product.prodName}
+				<div  id="prodNo" style="display:none">${product.prodNo}</div>					
 				</td>		
 				<td></td>
 				<td align="center">${product.price}</td>
+				<td></td>
+				<td align="center">${product.manuDate}</td>
 				<td></td>
 				<td align="center">${product.manuDate}</td>
 				<td></td>
