@@ -14,22 +14,19 @@
 <script type="text/javascript">	
 
 	function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-   	document.detailForm.submit();		
+// 	document.getElementById("currentPage").value = currentPage;
+	$("#currentPage").val(currentPage);
+	$("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${param.menu}").submit();
+//    	document.detailForm.submit();		
 	}
-	function fncGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-	   	document.detailForm.submit();	   	
-	}
+	
 	
 	$(function(){
 		
-		$("input:text[name='searchKeyword']").on("keydown", function(event){
-			
+		$("input:text[name='searchKeyword']").on("keydown", function(event){			
 			if(event.keyCode==13){
 				fncGetList('1');
-			}
-			
+			}			
 		});
 		
 		$(".ct_btn01:contains('검색')").on("click", function(){
@@ -49,48 +46,10 @@
 		
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		
-		console.log ( $(".ct_list_pop:nth-child(4)" ).html() ); //==> ok
-		
-		
+		console.log ( $(".ct_list_pop:nth-child(4)" ).html() ); //==> ok		
 		
 	});
-	function fncGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-	   	document.detailForm.submit();	   	
-	}
 	
-	$(function(){
-		
-		$("input:text[name='searchKeyword']").on("keydown", function(event){
-			
-			if(event.keyCode==13){
-				fncGetList('1');
-			}
-			
-		});
-		
-		$(".ct_btn01:contains('검색')").on("click", function(){
-			fncGetList('1');			
-		});
-		
-		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-		$("h7").css("color" , "red");
-		
-		$(".ct_list_pop td:nth-child(3)").on("click", function(){
-			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
-		});
-		
-		$(".ct_list_pop td:nth-child(11):contains('배송하기')").on("click", function(){
-			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
-		});
-		
-		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-		
-		console.log ( $(".ct_list_pop:nth-child(4)" ).html() ); //==> ok
-		
-		
-		
-	});
 
 </script>
 </head>
@@ -99,7 +58,7 @@
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/product/listProduct.do?menu=${param.menu}" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
