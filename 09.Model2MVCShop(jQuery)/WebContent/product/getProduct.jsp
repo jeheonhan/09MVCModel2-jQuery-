@@ -148,7 +148,7 @@
 				</td>					
 					<c:choose>
 				
-						<c:when test="${param.menu == 'search' }">					
+						<c:when test="${param.menu == 'search' and sessionScope.user.role =='user'}">					
 					
 						<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 							구매
@@ -166,7 +166,7 @@
 						</c:when>
 						
 						
-						<c:when test="${param.menu == 'confirm' }">
+						<c:when test="${param.menu == 'confirm' and sessionScope.user.role == 'admin'}">
 							<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
 								확인
 						</c:when>

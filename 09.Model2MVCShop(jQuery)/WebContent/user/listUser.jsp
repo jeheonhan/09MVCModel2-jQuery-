@@ -18,7 +18,7 @@
 	
 		//=====기존Code 주석 처리 후  jQuery 변경 ======//
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-		function fncGetUserList(currentPage) {
+		function fncGetList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
 			$("#currentPage").val(currentPage)
 		   	//document.detailForm.submit();
@@ -34,8 +34,14 @@
 			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-				fncGetUserList(1);
+				fncGetList(1);
 			});
+			
+			 $("input:text[name='searchKeyword']").on("keydown", function(event){			
+					if(event.keyCode==13){
+						fncGetList('1');
+					}			
+				});
 			
 			
 			//==> userId LINK Event 연결처리
