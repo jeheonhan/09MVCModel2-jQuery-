@@ -55,7 +55,7 @@
 	
 	$(function(){
 		
-		$(".ct_btn01:contains('등록')").on("click", function(){			
+		$("td.ct_btn01:contains('등록')").on("click", function(){			
 			fncAddProduct();
 		});
 		

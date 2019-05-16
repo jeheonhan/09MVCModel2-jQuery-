@@ -40,8 +40,11 @@
 			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
 		});
 		
-		$(".ct_list_pop td:nth-child(11):contains('배송하기')").on("click", function(){
-			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+		$(".ct_list_pop td:nth-child(11):contains('판매중')").on("click", function(){
+// 			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+			alert($(".ct_list_pop td:nth-child(11)").index(this));
+			alert($($(".ct_list_pop td:nth-child(3)").index(this)).text());
+			
 		});
 		
 		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
@@ -176,7 +179,7 @@
 				</c:otherwise>				
 			</c:choose>
 				<c:if test="${param.menu eq'manage' and product.proTranCode eq '111'}">
-				--><a href="/purchase/updateTranCode?prodNo=${product.prodNo}&currentPage=${resultPage.currentPage}&menu=${param.menu}">배송하기</a>
+				--> 배송하기
 				</c:if>	
 				
 				</td>	
