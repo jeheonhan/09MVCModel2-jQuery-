@@ -37,13 +37,13 @@
 		$("h7").css("color" , "red");
 		
 		$(".ct_list_pop td:nth-child(3)").on("click", function(){
-			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$(this).find('div').text().trim();
 		});
 		
 		$(".ct_list_pop td:nth-child(11):contains('판매중')").on("click", function(){
 // 			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
 			alert($(".ct_list_pop td:nth-child(11)").index(this));
-			alert($($(".ct_list_pop td:nth-child(3)").index(this)).text());
+			
 			
 		});
 		
