@@ -9,8 +9,6 @@
 <title>상품등록</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-<<<<<<< HEAD
-=======
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 	
@@ -29,7 +27,6 @@
 	});
 	
 	</script>
->>>>>>> refs/heads/new/dev
 
 </head>
 

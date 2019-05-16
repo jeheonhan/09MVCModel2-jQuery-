@@ -54,6 +54,43 @@
 		
 		
 	});
+	function fncGetList(currentPage) {
+		document.getElementById("currentPage").value = currentPage;
+	   	document.detailForm.submit();	   	
+	}
+	
+	$(function(){
+		
+		$("input:text[name='searchKeyword']").on("keydown", function(event){
+			
+			if(event.keyCode==13){
+				fncGetList('1');
+			}
+			
+		});
+		
+		$(".ct_btn01:contains('검색')").on("click", function(){
+			fncGetList('1');			
+		});
+		
+		$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
+		$("h7").css("color" , "red");
+		
+		$(".ct_list_pop td:nth-child(3)").on("click", function(){
+			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+		});
+		
+		$(".ct_list_pop td:nth-child(11):contains('배송하기')").on("click", function(){
+			self.location ="/product/getProduct?menu=${param.menu}&prodNo="+$("#prodNo").text().trim();
+		});
+		
+		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+		console.log ( $(".ct_list_pop:nth-child(4)" ).html() ); //==> ok
+		
+		
+		
+	});
 
 </script>
 </head>
@@ -101,8 +138,6 @@
 		
 			<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px"
 					value="${! empty search.searchKeyword ? search.searchKeyword : ""}"  
-					class="ct_input_g" style="width:200px; height:20px" 
-					onkeypress="if(event.keyCode==13) {javascript:fncGetList('1');}">
 					class="ct_input_g" style="width:200px; height:20px">
 		</td>
 		
@@ -114,7 +149,6 @@
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetList('1');">검색</a>
 											검색
 					</td>
 					<td width="14" height="23">
@@ -156,14 +190,13 @@
 				<td align="center">${i}</td>
 				<td></td>				
 				<td align="center">
-					<a href="/product/getProduct.do?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a>
 					${product.prodName}
 				<div  id="prodNo" style="display:none">${product.prodNo}</div>					
 				</td>		
 				<td></td>
 				<td align="center">${product.price}</td>
 				<td></td>
-				<td align="center">${product.manuDate}</td>
+				<td align="center">${product.regDate}</td>
 				<td></td>
 				<td align="center">${product.manuDate}</td>
 				<td></td>
@@ -184,7 +217,7 @@
 				</c:otherwise>				
 			</c:choose>
 				<c:if test="${param.menu eq'manage' and product.proTranCode eq '111'}">
-				--><a href="/purchase/updateTranCode.do?prodNo=${product.prodNo}&currentPage=${resultPage.currentPage}&menu=${param.menu}">배송하기</a>
+				--><a href="/purchase/updateTranCode?prodNo=${product.prodNo}&currentPage=${resultPage.currentPage}&menu=${param.menu}">배송하기</a>
 				</c:if>	
 				
 				</td>	
