@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript">
 	
 	$(function(){
 		
@@ -106,17 +106,19 @@
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">상품이미지</td>
+		<td width="104" class="ct_write">
+			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<!-- 테이블 시작 -->
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26">
-						<img src="/images/uploadFiles/../../images/empty.GIF"/>
-					</td>
-				</tr>
-			</table>
+			<c:choose>
+				<c:when test="${!(pvo.fileName == null || pvo.fileName == '')}">
+					<img src = "/images/uploadFiles/${pvo.fileName}"/>
+				</c:when>
+				<c:otherwise>
+					<img src = "/images/no_detail_img.gif"/>
+				</c:otherwise>
+			</c:choose>
 		</td>
 	</tr>
 	<tr>

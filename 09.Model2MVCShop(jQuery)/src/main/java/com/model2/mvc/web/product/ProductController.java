@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -40,7 +42,9 @@ public class ProductController {
 	int pageSize;
 	
 	@RequestMapping( value="addProduct", method=RequestMethod.POST)
-	public String addProduct(@ModelAttribute("pvo") Product product) throws Exception {
+	public String addProduct(@ModelAttribute("pvo") Product product,
+							@RequestParam(value="file", required=false) MultipartFile imgFile,
+							HttpServletRequest request) throws Exception {
 		
 		System.out.println("/addProduct");
 		
@@ -48,6 +52,25 @@ public class ProductController {
 		manuDate = manuDate.replaceAll("/", "");
 		product.setManuDate(manuDate);
 		
+		System.out.println("imgFile.getOriginalFilename()  :: " + imgFile.getOriginalFilename());
+		System.out.println("Product :: " + product);
+		System.out.println("이미지 파일 크기 : "+imgFile.getSize());		
+		
+		String temDir = "C:\\Users\\USER\\git\\09MVCModel2-jQuery-\\09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles"; 
+				
+		
+		if(!imgFile.isEmpty()) {
+			
+			String fileName = imgFile.getOriginalFilename();
+			product.setFileName(fileName);
+			try {
+				File uploadedFile = new File(temDir, fileName);
+				imgFile.transferTo(uploadedFile);
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+			
+		}
 		productService.addProduct(product);
 		
 		return "forward:/product/addProduct.jsp";
@@ -78,7 +101,7 @@ public class ProductController {
 		if(menu.equals("manage")) {			
 			return "forward:/product/updateProduct.jsp";			
 		}else {
-			return "forward:/product/getProduct.jsp";			
+			return "forward:/product/getProduct.jsp?prodNo="+prodNo;			
 		}	
 		
 	}

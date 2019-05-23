@@ -63,7 +63,7 @@
 			
 			$(".Depth03:contains('구매이력조회')").on("click", function(){
 				
-				$(window.parent.frames["rightFrame"].document.location).attr("href","/listPurchase.do?userId=${sessionScope.user.userId}");
+				$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listPurchase?userId=${sessionScope.user.userId}");
 				
 			});
 			
