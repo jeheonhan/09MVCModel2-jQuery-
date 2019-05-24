@@ -153,7 +153,7 @@
 				<td></td>				
 				<td align="center">
 					${product.prodName}
-				<div  id="prodNo" style="display:none">${product.prodNo}</div>					
+				<div  style="display:none">${product.prodNo}</div>					
 				</td>		
 				<td></td>
 				<td align="center">${product.price}</td>

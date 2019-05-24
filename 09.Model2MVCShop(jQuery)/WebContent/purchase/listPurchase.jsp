@@ -10,12 +10,42 @@
 <title>구매 목록조회</title>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
 <script type="text/javascript">
 
-function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-   	document.detailForm.submit();		
-}
+	
+	function fncGetList(currentPage) {
+		//document.getElementById("currentPage").value = currentPage;
+		$("#currentPage").val(currentPage);
+	   	//document.detailForm.submit();
+		$("form").attr("method", "POST").attr("action", "/purchase/listPurchase?userId=${param.userId}").submit();
+	}
+	
+	$(function(){
+		
+		$( ".ct_list_pop td:nth-child(1)" ).css("color" , "red");
+		
+		$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+		
+		$(".ct_list_pop td:nth-child(1)").on("click", function(){			
+			//alert($(this).find("div").text().trim());			* find() 방법
+			var thisIndex = $(".ct_list_pop td:nth-child(1)").index($(this));
+			//alert($($(".ct_list_pop td:nth-child(1) div")[index]).text());
+			var tranNo = $($(".ct_list_pop td:nth-child(1) div")[thisIndex]).text().trim();
+			self.location="/purchase/getPurchase?tranNo="+tranNo;			
+		});
+		
+		$(".ct_list_pop td:nth-child(3)").on("click", function(){
+			
+			var thisIndex = $(".ct_list_pop td:nth-child(3)").index($(this));
+			var userId = $($(".ct_list_pop td:nth-child(3)")[thisIndex]).text().trim();
+			alert(userId+"("+thisIndex+")");
+			//alert($(this).text().trim());
+			self.location="/user/getUser?userId="+userId;			
+		});
+		
+	});
 
 </script>
 
@@ -25,7 +55,7 @@ function fncGetList(currentPage) {
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/purchase/listPurchase?userId=${sessionScope.user.userId}" method="post">
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -67,13 +97,11 @@ function fncGetList(currentPage) {
 		<c:set var="i" value="${ i+1 }" />
 	
 	<tr class="ct_list_pop">
-		<td align="center">
-			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a>
+		<td align="center">${purchase.purchaseProd.prodName}
+			<div style="display:none">${purchase.tranNo}</div>
 		</td>
 		<td></td>
-		<td align="center">
-			<a href="/user/getUser?userId=${purchase.buyer.userId}">${purchase.buyer.userId}</a>
-		</td>
+		<td align="center">${purchase.buyer.userId}</td>
 		<td></td>
 		<td align="center">${purchase.receiverName}</td>
 		<td></td>
@@ -97,8 +125,7 @@ function fncGetList(currentPage) {
 		<td align="center">
 			<c:if test="${purchase.tranCode == '222'}">
 				<a href="/purchase/updateTranCode?userId=${purchase.buyer.userId}&currentPage=${resultPage.currentPage}&tranNo=${purchase.tranNo}">수령하기</a>		
-			</c:if>
-			
+			</c:if>			
 		</td>
 	</tr>
 	<tr>

@@ -91,7 +91,7 @@ public class PurchaseController {
 		
 		model.addAttribute("purchase", purchase);
 		
-		return "forward:/purchase/getPurchase.jsp";
+		return "forward:/purchase/getPurchase.jsp?tranNo="+tranNo;
 	}
 	
 	@RequestMapping(value="listPurchase")
@@ -104,6 +104,8 @@ public class PurchaseController {
 		}
 		search.setPageSize(pageSize);
 		
+		int currentPage = search.getCurrentPage();
+		
 		Map<String , Object> map = purchaseService.getPurchaseList(search, buyerId);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -113,7 +115,7 @@ public class PurchaseController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);		
 		
-		return "forward:/purchase/listPurchase.jsp";
+		return "forward:/purchase/listPurchase.jsp?userId="+buyerId+"&currentPage="+currentPage;
 	}	
 	
 	@RequestMapping(value="updatePurchase", method=RequestMethod.POST)

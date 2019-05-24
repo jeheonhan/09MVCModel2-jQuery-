@@ -16,11 +16,10 @@
 		$(function(){
 			
 			var userId = $(".ct_write01").find('p').text().trim();
-			var tranNo = $("div:hidden[name='tranNo']");
-			alert($("div.tranNo").text().trim());
 			
-			$(".ct_btn01:contains('수정')").on("click", function(){				
-				self.location="/purchase/purchase/updatePurchaseView?tranNo="+tranNo;
+			$(".ct_btn01:contains('수정')").on("click", function(){		
+				//alert("/purchase/updatePurchaseView?tranNo=${param.tranNo}");
+				self.location="/purchase/updatePurchaseView?tranNo=${param.tranNo}";
 			});
 			
 			$(".ct_btn01:contains('확인')").on("click", function(){
@@ -36,8 +35,6 @@
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
-
-<div  class="tranNo" style="display:none">${purchase.tranNo}</div>
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
